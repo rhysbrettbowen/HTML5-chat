@@ -1,0 +1,49 @@
+body {
+        background-color: gray;
+        margin: 0;
+        padding: 0;
+        font-family: Helvetica, Arial, Sans-Serif;
+      }
+      #tabs {
+        position: absolute;
+        top: 0px;
+        bottom: 50px;
+        left: 0px;
+        right: 185px;
+        overflow: scroll
+      }
+      #tabs ul {
+        padding: 0;
+        margin: 0;
+      }
+      #tabs ul li {
+        list-style-type: none;
+      }
+      #Input {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        font-size: 18px;
+      }
+      #entry{
+        font-size: 1.5em;
+        height: 35px;
+        width: 70%;
+      }
+      #Send {
+        right: 0px;
+        height: 25px;
+      }
+      #Sidebar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 180px;
+      height: 100%;
+      }
+	#selectable .ui-selecting { background: #FECA40; }
+	#selectable .ui-selected { background: #F39814; color: white; }
+	#selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+	#selectable li { margin: 1px; padding: 0.4em; font-size: 1.4em; height: 15px; }
+
+

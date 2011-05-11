@@ -1,0 +1,13 @@
+<head></head>
+<body>
+<script src="/socket.io/socket.io.js"></script> 
+<script> 
+ var socket = new io.Socket('localhost', {port: 4000}); 
+ console.log(socket);
+ arse = socket.connect();
+ console.log(arse);
+ socket.on('connect', function(){alert('connected');}) 
+ socket.on('message', function(message){alert(message);}) 
+ socket.on('disconnect', function(){alert('disconnect');}) 
+</script> 
+</body>

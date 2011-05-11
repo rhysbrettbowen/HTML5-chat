@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><title>nodeFeed</title></head>
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="http://cdn.socket.io/stable/socket.io.js"></script>
+    <script type="text/javascript" src="/feed.js"></script>
+    <body>
+        <div id="main">
+            <div id="Talk">
+                <div id="Head">
+                    <div id="Tabs"></div>
+                </div>
+                <div id="Body">
+                    <div id="Chat">
+                        <ul></ul>
+                    </div>
+                </div>
+                <div id="Foot">
+                    <div id="Input">
+                        <input type="text" id="entry">
+                        <input type="button" id="send" onClick='sendMe(document.getElementById("entry").value);'>
+                    </div>
+                </div>
+            </div>
+            <div id="Sidebar">
+                <div id="Contacts">
+                    <form method="post" enctype="multipart/form-data">
+                        <p>Image: <input type="file" name="image" /></p>
+                        <p><input type="submit" value="Upload" /></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

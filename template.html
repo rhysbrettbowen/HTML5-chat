@@ -1,0 +1,14 @@
+<head></head>
+<body>
+<script src="/socket.io/socket.io.js"></script> 
+<script> 
+var socket = new io.Socket('localhost:4000'); 
+socket.on('connect', function(){ 
+  socket.send('hi!'); 
+}); 
+socket.on('message', function(data){ 
+  alert(data);
+});
+socket.on('disconnect', function(){}); 
+</script> 
+</body>
