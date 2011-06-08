@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    
+ 
 //Setup buttons
   $("button").button();
 

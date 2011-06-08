@@ -114,8 +114,6 @@ socket.on('connection', function(client){
   	    }
   	}
   });
-
-
 });
 app.listen(3000);
 
