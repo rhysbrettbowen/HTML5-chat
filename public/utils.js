@@ -1,6 +1,10 @@
 
 $(document).ready(function () {
  
+  function timeNow(){
+    var d = new Date();
+    return d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+  }
 //Setup buttons
   $("button").button();
 
@@ -8,11 +12,12 @@ $(document).ready(function () {
   	var myName="";
   	var tabList=[];
     var $tabs = $( "#tabs").tabs({
-            tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
+            tabTemplate: "<li><a href='#{href}' id='#{label}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
             add: function(event,ui) {
-                $(ui.panel).append( "<ul>"+(myTabs.getStore($(ui.tab).text())||"")+"</ul>" );
+                $(ui.panel).append( "<div id='tab-content'><ul>"+(myTabs.getStore($(ui.tab).text())||"")+"</ul></div>" );
             },
             select: function(e, ui) {
+                $("#"+$(ui.tab).text()).removeClass('newMessage');
                 myTabs.current=($(ui.tab).text());
             },
             remove: function(event, ui){
@@ -52,8 +57,7 @@ $(document).ready(function () {
     };
     
     function sendServer(msg,to,type){
-        return socket.send({msg:msg,type:type,to:to,from:myName});
-    }
+        return socket.send(JSON.stringify({msg:msg,type:type,to:to,from:myName})); }
     
     function sendToAll(msg){
         return sendServer(msg,"all","broadcast");
@@ -71,14 +75,36 @@ $(document).ready(function () {
         }
         else{
             sendPrivate($('#entry').val(),myTabs.current);
+            var d = new Date();
+            myTabs.appendCurr('<li>['+myName+' '+timeNow()+']:'+$('#entry').val()+"</li>");
+        }
+        $('#entry').val("").focus();
+        return false;
+    });
+
+//Clear chat logs
+
+    $("#clear").click(function(){
+        localStorage.setItem('tabs-'+myTabs.current,'');
+        $("#tabs-"+myTabs.current+" ul").html("");
+    });
+
+/*
+    $("#myForm").submit(function(){
+        if(myTabs.current==="Main"){
+            sendToAll($('#entry').val());
+        }
+        else{
+            sendPrivate($('#entry').val(),myTabs.current);
             myTabs.appendCurr('['+myName+']:'+$('#entry').val());
         }
         $('#entry').val("").focus();
+        return false;
     });
-
+*/
 //Upload a file
     $("#share").click(function(){
-        $('body').append("<div id='hover' style='position:absolute;top:100px;left:100px;width:800px;height:600px;z-index:9999;'><button id='close'>Close</button><scr"+"ipt>$('#close').click(function(){$('#hover').remove()});</scr"+"ipt><iframe src='upload.html?to="+myTabs.current+"&from="+myName+"' width=400 height=600></iframe></div>");
+        $('body').append("<div id='hover' style='position:absolute;top:100px;left:100px;width:600px;height:400px;z-index:9999;'><button id='close'>Close</button><scr"+"ipt>$('#close').click(function(){$('#hover').remove()});</scr"+"ipt><iframe src='upload.html?to="+myTabs.current+"&from="+myName+"' width=600 height=400></iframe></div>");
     });
     
     var users = {
@@ -108,22 +134,23 @@ $(document).ready(function () {
     };
   
     var reqParser = function(req){
+        var req = JSON.parse(req);
         tab="Main";
         data="";
         show=false;
         if(req.scope&&req.scope=="private")
             tab=req.from;
         templateMessage = function(data,from){
-            return "<li>["+from+"]: "+data+"</li>";
+            return "<li>["+from+" "+timeNow()+"]: "+data+"</li>";
         };
         templateImage = function(data,from){
-            return "<li>["+from+"]: <img src="+data+" /></li>"  
+            return "<li>["+from+" "+timeNow()+"]: <img src="+data+" /></li>"  
         };
         templateVideo = function(data,from){
-            return '<li>['+from+']: <video preload="auto" src="'+data+'" autobuffer="autobuffer" controls="controls"></li>';
+            return '<li>['+from+' '+timeNow()+']: <video preload="auto" src="'+data+'" autobuffer="autobuffer" controls="controls"></li>';
         };
         templateFile = function(data,from){
-            return "<li>["+from+"]: <a href="+data+">"+data+"</a></li>";
+            return "<li>["+from+" "+timeNow()+"]: <a href="+data+">"+data+"</a></li>";
         };
         var type = req.type;
         if(type==="message"){
@@ -165,8 +192,13 @@ $(document).ready(function () {
     console.log(msg);  
     myReq = reqParser(msg);
     if(myReq.show){
+//        if(myTabs.current!=myReq.tab){
+  //        console.log(myReq.tab);
+    //      $("#"+myReq.tab).addClass('newMessage');
+      //  }
         myTabs.appendTab(myReq.tab,myReq.data);
     }
+    $("#tab-content").scrollTop(9999999);
   });
 
     myTabs.addTab("Main");

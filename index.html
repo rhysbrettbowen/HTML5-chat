@@ -2,6 +2,7 @@
 <html lang="en">
     <head><title>nodeFeed</title></head>
     <link rel="stylesheet" type="text/css" href="css/dark-hive/jquery-ui-1.8.12.custom.css">
+    <script type="text/javascript" src="/json2.js"></script>
     <script type="text/javascript" src="jquery-1.6.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.12.custom.min.js"></script>
     <script type="text/javascript" src="http://cdn.socket.io/stable/socket.io.js"></script>
@@ -10,10 +11,7 @@
     <body>
         <div id="main">
             <div id="Talk">
-                <div id="Head">
-                    <div id="Tabs"></div>
-                </div>
-                <div id="Body">
+                 <div id="Body">
                     <div id="tabs">
                         <ul>
                         </ul>
@@ -21,14 +19,17 @@
                 </div>
                 <div id="Foot">
                     <div id="Input">
-                        <input type="text" id="entry" value="type here">
-                        <button id="share">Share</button>
-                        <button id="send">Send</button>
+                        <form id="myForm">
+                            <input type="text" id="entry" value="type here">
+                            <button id="send">Send</button>
+                        </form>
                     </div>
                 </div>
             </div>
             <div id="Sidebar">
                 <div id="Contacts">
+                    <button id="share">Share</button>
+                    <button id="clear">Clear</button>
                 	<ul multiple="multiple" id ="selectable"> </ul>
                 </div>
             </div>
